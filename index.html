@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medical Record</title>
   <style>
     body {
@@ -12,20 +13,20 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      height: 120vh;
-      overflow-y: scroll;
+      min-height: 100vh;
       color: white;
     }
 
     .container {
-      background-color: rgba(255, 255, 255, 0.322);
-      width: 500px;
-      margin: auto;
-      margin-top: 100px;
-      padding: 70px;
+      background-color: rgba(255, 255, 255, 0.4);
+      width: 90%;
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 40px 20px;
       border-radius: 20px;
       text-align: center;
       color: #333;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
 
     h1 {
@@ -47,15 +48,14 @@
 
     .menu-button {
       display: block;
-      width: calc(100% - 20px);
-      margin: 10px 0;
+      width: 90%;
+      margin: 10px auto;
       padding: 10px;
-      background-color: rgb(255, 255, 255);
-      background-position: auto;
+      background-color: white;
       border: none;
       font-weight: bold;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: background 0.2s;
       text-decoration: none;
       color: #333;
@@ -63,6 +63,20 @@
 
     .menu-button:hover {
       background-color: #e0e0e0;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      h2 {
+        font-size: 16px;
+      }
+
+      .menu-button {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
