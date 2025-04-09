@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Medical Record</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
@@ -19,61 +19,64 @@
 
     .container {
       background-color: rgba(255, 255, 255, 0.4);
-      width: 90%;
-      max-width: 400px;
+      max-width: 90%;
       margin: 40px auto;
-      padding: 20px 15px;
-      border-radius: 16px;
+      padding: 30px 20px;
+      border-radius: 20px;
       text-align: center;
       color: #333;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
     }
 
     h1 {
-      font-size: 20px;
+      font-size: 22px;
       margin-bottom: 5px;
       font-weight: bold;
     }
 
     h2 {
-      font-size: 14px;
-      margin: 0 0 10px;
+      font-size: 16px;
+      margin: 5px 0 10px;
     }
 
     p {
-      font-size: 11px;
-      margin-bottom: 15px;
+      font-size: 12px;
+      margin-bottom: 20px;
       color: #555;
     }
 
     .menu-button {
       display: block;
-      width: 100%;
-      margin: 8px 0;
-      padding: 8px;
+      width: calc(100% - 20px);
+      margin: 10px auto;
+      padding: 10px;
       font-size: 13px;
       background-color: white;
       border: none;
       font-weight: bold;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 6px;
       text-decoration: none;
       color: #333;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: background 0.2s;
+      transition: all 0.3s ease;
     }
 
     .menu-button:hover {
       background-color: #f0f0f0;
+      transform: scale(1.03);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
+    .menu-button:active {
+      transform: scale(0.97);
+    }
     @media (max-width: 400px) {
       .container {
-        padding: 5px 5px;
+        padding: 15px 10px;
       }
-
       h1 {
-        font-size: 18px;
+        font-size: 28px;
       }
 
       h2 {
