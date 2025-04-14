@@ -1,541 +1,228 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Medical Record</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Record - Unit Rekam Medis RSU An'NIMAH</title>
+
+  <!-- Font Awesome untuk ikon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
   <style>
-    body {
+    /* Warna dan font dasar */
+    :root {
+      --primary-color: #28c4ac;
+      --dark-color: #333;
+      --light-bg: #f9fcff;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-image: url('backgroundrsnmc.jpeg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      min-height: 1vh;
-      color: white;
-    }
-
-    .container {
-      background-color: rgba(255, 255, 255, 0.4);
-      max-width: 90%;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 30px;
-      text-align: center;
-      color: #333;
       box-sizing: border-box;
-      overflow-x: auto;
     }
 
-    h1 {
-      font-size: 22px;
-      margin-bottom: 5px;
+    body {
+      font-family: 'Arial', sans-serif;
+      background: var(--light-bg);
+      color: var(--dark-color);
+    }
+
+    header {
+      background: var(--primary-color);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      animation: fadeIn 2s ease-in;
+    }
+
+    nav {
+      background: #333;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
       font-weight: bold;
+      transition: 0.3s;
+      padding: 5px 15px;
+      border-radius: 5px;
+    }
+
+    nav ul li a:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      padding: 40px;
+      margin-top: 20px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    section.active {
+      display: block;
+      opacity: 1;
     }
 
     h2 {
-      font-size: 16px;
-      margin: 5px 0 10px;
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease-out;
     }
 
     p {
-      font-size: 12px;
-      margin-bottom: 20px;
-      color: #555;
+      font-size: 1rem;
+      line-height: 1.6;
+      animation: slideUp 1s ease-out;
     }
 
-    .menu-button {
-      display: block;
-      width: calc(100% - 20px);
-      margin: 10px auto;
-      padding: 10px;
-      font-size: 13px;
-      background-color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #333;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-    }
-
-    .menu-button:hover {
-      background-color: #f0f0f0;
-      transform: scale(1.03);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .menu-button:active {
-      transform: scale(0.97);
-    }
-
-    table {
-      margin-top: 30px;
-      background-color: rgb(255, 255, 255);
-      font-size: 10px;
-      border-collapse: collapse;
-      width: max-content;
-      min-width: 1200px;
-    }
-
-    th, td {
-      border: 1px solid #2b2b2b;
-      padding: 4px;
+    footer {
+      background: #333;
+      color: white;
       text-align: center;
+      padding: 20px;
+      position: relative;
+      margin-top: 50px;
     }
 
-    thead tr:nth-child(1) th {
-      background-color: #96aca4;
-    }
-    thead tr:nth-child(2) th {
-      background-color: #f0f0f0;
-    }
-
-    .pink { background-color: #f4cccc; }
-    .green { background-color: #d9ead3; }
-    .red { background-color: #ea9999; }
-    .orange { background-color: #f9cb9c; }
-    .yellow { background-color: #fff2cc; }
-    .blue { background-color: #c9daf8; }
-    .gray { background-color: #e6e6e6; }
-    .purple { background-color: #d5a6bd; }
-
-    @media (max-width: 400px) {
-      .container {
-        padding: 15px 10px;
+    /* Animasi */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
       }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      h2 {
-        font-size: 13px;
-      }
-
-      .menu-button {
-        font-size: 10px;
-        padding: 5px;
+      to {
+        opacity: 1;
       }
     }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Partikel animasi */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>MEDICAL RECORD</h1>
-    <h2>UNIT REKAM MEDIK RSU AN NI'MAH</h2>
-    <p>Kumpulan link terkait Rekam Medis</p>
 
-    <a href="https://drive.google.com/drive/folders/1XwPFZviN2lWLNLvQJW0QSN1Ouyanj1jI" class="menu-button">JADWAL 2025</a>
-    <a href="https://drive.google.com/drive/folders/1ETmdzkvzPZqiUSahkOmOqpEtemqkMtk1" class="menu-button">STATISTIK</a>
-    <a href="https://drive.google.com/drive/folders/15wsCghN376S1WFCnrkJzw8WPxdvjdUUZ" class="menu-button">REGULASI</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOsbOI6MaKUwL16QW2n8TlzQOGS-_u2x36UHHaTzrboqAx8g/viewform" class="menu-button">SURVEY KEPUASAN PASIEN</a>
-    <a href="#" class="menu-button">KPI</a>
-    <a href="https://registrasi.bpjs-kesehatan.go.id/registrasi/Login/rubah_password" class="menu-button">LINK UBAH VCLAIM</a>
-    <a href="https://docs.google.com/spreadsheets/d/1aJu0o42YsUh0pgkV0Ji93GI9glgQi-Bu/edit?gid=1057286667#gid=1057286667" class="menu-button">DX INDIKASI GADAR</a>
-    <a href="https://drive.google.com/drive/folders/1D0j5SRTJcBQ-16ZiyF4LYe_5cw3JOOOc" class="menu-button">KLL</a>
-    <a href="https://drive.google.com/drive/folders/1LFx5XUp0CPUV2mL8uHKIHcyLMKyUVgL0" class="menu-button">LAPORAN SKDR</a>
-    <a href="https://docs.google.com/spreadsheets/d/1UA3Ewl4MlBcQ3np0W7lxD1QQd60Diwvd/edit?gid=1645632161#gid=1645632161" class="menu-button">LAPORAN SARS 2023</a>
-    <a href="#" class="menu-button" id="sensus-button">SENSUS HARIAN</a>
-    <a href="https://docs.google.com/spreadsheets/d/16MzwHUpcixLnynXF5hxpl1MZNNItB_UINyX60--kLgU/edit?gid=1962623614#gid=1962623614" class="menu-button">REKAPITULASI SEP</a>
-    <a href="#" class="menu-button">PENGAJUAN PASIEN BATAL</a>
-    <a href="https://drive.google.com/drive/folders/159wroCWuLH_wPB8_bGpq7ppB62cQFG9b" class="menu-button">IMUT</a>
+<!-- Background Particles -->
+<div id="particles-js"></div>
 
-    <table style="display: none;">
-      <thead>
-        <tr>
-          <th rowspan="2">TANGGAL</th>
-          <th colspan="3">PASIEN MASUK</th>
-          <th colspan="6" class="pink">PASIEN KELUAR HIDUP</th>
-          <th colspan="5" class="yellow">PASIEN KELUAR MATI</th>
-          <th colspan="3" class="blue">JUMLAH PASIEN KELUAR HIDUP + MATI</th>
-          <th colspan="3" class="gray">LAMA DIRAWAT</th>
-          <th colspan="3">PASIEN MASUK & KELUAR DI HARI YG SAMA</th>
-          <th rowspan="2">JUMLAH HARI PERAWATAN</th>
-          <th rowspan="2">SISA PASIEN</th>
-        </tr>
-        <tr>
-          <th>MASUK L</th><th>P</th><th>JUMLAH</th>
-          <th class="pink">DIPINDAHKAN L</th><th>P</th>
-          <th class="pink">DIPULANGKAN L</th><th>P</th>
-          <th class="green">APS L</th><th>P</th>
-          <th class="red">MELARIKAN DIRI L</th><th>P</th>
-          <th class="orange">RUJUK L</th><th>P</th>
-          <th class="yellow">&lt;48 JAM L</th><th>P</th>
-          <th class="yellow">&gt;48 JAM L</th><th>P</th>
-          <th class="blue">L</th><th>P</th><th>JML</th>
-          <th class="gray">L</th><th>P</th><th>JML</th>
-          <th>L</th><th>P</th><th>JML</th>
-        </tr>
-      </thead>
-      <tbody>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>11</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>12</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>14</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>15</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>16</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>17</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>18</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>19</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>20</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>21</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>22</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>23</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>24</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>25</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>26</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>27</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>28</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>29</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>30</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-        <tr>
-          <td>31</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td><td>0</td>
-          <td>0</td><td>0</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const sensusButton = document.getElementById('sensus-button');
-      const allButtons = document.querySelectorAll('.menu-button');
-      const table = document.querySelector('table');
-      const header = document.querySelector('h1');
-      const subheader = document.querySelector('h2');
-      const paragraph = document.querySelector('p');
+<header>
+  <h1>Medical Record - Unit Rekam Medis RSU An'NIMAH</h1>
+  <p>Berikut adalah sistem informasi untuk pengelolaan rekam medis rumah sakit kami.</p>
+</header>
 
-      sensusButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        allButtons.forEach(btn => btn.style.display = "none");
-        header.style.display = "none";
-        subheader.style.display = "none";
-        paragraph.style.display = "none";
-        table.style.display = "table";
-      });
+<nav>
+  <ul>
+    <li><a href="javascript:void(0)" onclick="showSection('profil')">Profil</a></li>
+    <li><a href="javascript:void(0)" onclick="showSection('regulasi')">Regulasi</a></li>
+    <li><a href="javascript:void(0)" onclick="showSection('indikator')">Indikator</a></li>
+    <li><a href="javascript:void(0)" onclick="showSection('laporan')">Laporan</a></li>
+  </ul>
+</nav>
+
+<!-- Section Profil -->
+<section id="profil" class="active">
+  <h2>Profil Unit Rekam Medis</h2>
+  <p>Unit Rekam Medis adalah unit yang menangani pengelolaan data rekam medis pasien, mulai dari pencatatan hingga pengarsipan.</p>
+</section>
+
+<!-- Section Regulasi -->
+<section id="regulasi">
+  <h2>Regulasi Rekam Medis</h2>
+  <p>Regulasi terkait pengelolaan rekam medis mencakup SOP, peraturan, dan dokumen penting lainnya yang harus diikuti oleh setiap petugas rekam medis.</p>
+</section>
+
+<!-- Section Indikator -->
+<section id="indikator">
+  <h2>Indikator Kinerja</h2>
+  <p>Indikator ini digunakan untuk mengukur kinerja unit rekam medis, seperti kelengkapan rekam medis, dan kecepatan pemrosesan.</p>
+</section>
+
+<!-- Section Laporan -->
+<section id="laporan">
+  <h2>Laporan Kegiatan</h2>
+  <p>Setiap kegiatan dan data pasien yang tercatat dalam sistem dapat dilaporkan secara berkala untuk evaluasi dan pengawasan.</p>
+</section>
+
+<footer>
+  &copy; 2025 Unit Rekam Medis RSU An'NIMAH. Semua Hak Dilindungi.
+</footer>
+
+<!-- Script Particles.js -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 40 },
+      color: { value: "#28c4ac" },
+      shape: { type: "circle" },
+      opacity: { value: 0.3 },
+      size: { value: 3 },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#28c4ac",
+        opacity: 0.4,
+        width: 1
+      },
+      move: { enable: true, speed: 2 }
+    },
+    interactivity: {
+      events: {
+        onhover: { enable: true, mode: "repulse" }
+      }
+    },
+    retina_detect: true
+  });
+
+  function showSection(id) {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(sec => {
+      sec.classList.remove('active');
     });
-  </script>
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+
 </body>
 </html>
